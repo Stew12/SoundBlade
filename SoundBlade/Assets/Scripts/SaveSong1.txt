@@ -1,0 +1,20 @@
+X AXIS MATTERS ONLY, THESE ARE COORDINATES
+
+Left -89.8
+Down 105.3
+Up 145.2 
+Right 181.8
+
+Right 432
+Up 463
+Down 503
+Left 542
+
+Up 748
+Down 779
+Left 819
+Down 854
+Left 934
+
+Up 1023
+Left 1090
