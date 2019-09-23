@@ -31,8 +31,7 @@ public class MusicBar : MonoBehaviour
     {
         startingPos = Treble.transform.position;
         transform.position = startingPos;
-        //path = "C:\\Users\\Lachlan\\Documents\\SoundBlade\\Assets\\Scripts\\Song1.txt";
-        path = "Assets\\Scripts\\SongFiles\\Song1.txt";
+        path = "C:\\Users\\Lachlan\\Documents\\SoundBlade\\Assets\\Scripts\\Song1.txt";
         songLength = movementSpeed;
     }
 
@@ -46,6 +45,7 @@ public class MusicBar : MonoBehaviour
 
         if (Input.GetKeyDown("space")) 
         {
+            Debug.Log("p");
             if (!paused)
             {
                 music.volume = 0;
