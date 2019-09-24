@@ -40,6 +40,11 @@ public class NoteSong : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Destroy(gameObject);   
+
+        if (other.tag == "Party")
+        {
+            other.GetComponent<PlayerValues>().DamageFlag();
+        }
     }
 
     private void SetColour()
