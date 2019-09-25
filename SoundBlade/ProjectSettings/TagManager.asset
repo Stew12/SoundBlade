@@ -7,6 +7,9 @@ TagManager:
   - MusicBar
   - Party
   - Enemy
+  - TurnManager
+  - NoteGenerator
+  - BattleMenu
   layers:
   - Default
   - TransparentFX

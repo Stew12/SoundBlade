@@ -27,7 +27,6 @@ public class PlayerValues : MonoBehaviour
         if (timer)
             time -= Time.time;
 
-        Debug.Log(time);
         if (time <= 0)
         {
             HP[0].color = Color.red;

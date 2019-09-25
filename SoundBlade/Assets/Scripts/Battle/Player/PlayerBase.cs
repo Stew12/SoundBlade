@@ -35,14 +35,21 @@ public class PlayerBase : MonoBehaviour
     private float atkTime;
 
     public float variation = 4;
-    
+
+    //Turn- decides if player can act or not
+    public bool turn = false;
+    private bool turnSent = false;
+
 
     //////////////////////GameObjects to call on//////////////////////
-    
+
     //This object is used to change the values of the party member's UI, such as hp and mp
     public GameObject PartyMemberUI;
+    public GameObject playerCamera;
 
-
+    private GameObject turnManager;
+    private GameObject battleMenu;
+    private GameObject mainCamera;
 
 
 
@@ -51,12 +58,23 @@ public class PlayerBase : MonoBehaviour
     {
         currentHP = maxHP;
         currentMP = maxMP;
+        turnManager = GameObject.FindGameObjectWithTag("TurnManager");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        battleMenu = GameObject.FindGameObjectWithTag("BattleMenu");
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckFainted();
+
+        if ((turn) && (!turnSent))
+            MenuInterface();
+    }
+
+    public void PlayerTurn()
+    {
+        turn = true;
     }
 
     //Is called when the party member misses a note
@@ -80,5 +98,26 @@ public class PlayerBase : MonoBehaviour
         {
             //Faint
         }
+    }
+
+    private void MenuInterface()
+    {
+        //Change Camera view
+        mainCamera.SetActive(false);
+        playerCamera.SetActive(true);
+
+        //Show the battle menu and have it handle inputs
+        battleMenu.SetActive(true);
+        Debug.Log(battleMenu);
+        battleMenu.GetComponent<MenuControl>().GetPlayer(gameObject);
+        turnSent = true;
+    }
+
+
+    public void TurnEnd()
+    {
+        turnSent = false;
+        playerCamera.SetActive(false);
+        turnManager.GetComponent<TurnManager>().ChangeTurn();
     }
 }

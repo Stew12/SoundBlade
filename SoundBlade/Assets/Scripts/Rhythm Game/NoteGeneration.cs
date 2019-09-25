@@ -15,6 +15,7 @@ public class NoteGeneration : MonoBehaviour {
 
     public float currTime = 0f;
     public string[] noteList;
+    public bool enabled = false;
     
     private int index = 0;
     private bool finishedSong = false;
@@ -81,9 +82,12 @@ public class NoteGeneration : MonoBehaviour {
                     break;
             }
 
-            GameObject spawnedNote = Instantiate(note, spawnLocation.transform.position, Quaternion.Euler(0f, 0f, rotation));
-            spawnedNote.GetComponent<NoteSong>().direction = noteDirs[index];
-            spawnedNote.transform.SetParent(canvas.transform);
+            if (enabled)
+            {
+                GameObject spawnedNote = Instantiate(note, spawnLocation.transform.position, Quaternion.Euler(0f, 0f, rotation));
+                spawnedNote.GetComponent<NoteSong>().direction = noteDirs[index];
+                spawnedNote.transform.SetParent(canvas.transform);
+            }
 
             //Check if all notes have been not been played
             if (index < noteTimes.Count - 1)
