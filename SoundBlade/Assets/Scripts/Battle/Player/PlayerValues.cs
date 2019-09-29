@@ -20,6 +20,9 @@ public class PlayerValues : MonoBehaviour
     {
         enemy = GameObject.FindGameObjectWithTag("Enemy");
         defaultColourHP = HP[0].color;
+
+        HPChange((int)PlayerBase.GetComponent<PlayerBase>().maxHP);
+        MPChange((int)PlayerBase.GetComponent<PlayerBase>().maxMP);
     }
 
     private void Update()

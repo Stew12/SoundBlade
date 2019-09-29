@@ -33,6 +33,7 @@ public class PlayerBase : MonoBehaviour
     private float currentMP;
     private float attackVariation;
     private float atkTime;
+    private float defenseRegular;
 
     public float variation = 4;
 
@@ -40,16 +41,16 @@ public class PlayerBase : MonoBehaviour
     public bool turn = false;
     private bool turnSent = false;
 
+    public bool defenseBuff = false;
+
 
     //////////////////////GameObjects to call on//////////////////////
 
     //This object is used to change the values of the party member's UI, such as hp and mp
     public GameObject PartyMemberUI;
-    public GameObject playerCamera;
 
     private GameObject turnManager;
     private GameObject battleMenu;
-    private GameObject mainCamera;
 
 
 
@@ -58,8 +59,8 @@ public class PlayerBase : MonoBehaviour
     {
         currentHP = maxHP;
         currentMP = maxMP;
+        defenseRegular = defense;
         turnManager = GameObject.FindGameObjectWithTag("TurnManager");
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         battleMenu = GameObject.FindGameObjectWithTag("BattleMenu");
     }
 
@@ -67,6 +68,15 @@ public class PlayerBase : MonoBehaviour
     void Update()
     {
         CheckFainted();
+
+        if (defenseBuff)
+        {
+            defense *= 1.5f;
+        }
+        else
+        {
+            defense = defenseRegular;
+        }
 
         if ((turn) && (!turnSent))
             MenuInterface();
@@ -102,12 +112,8 @@ public class PlayerBase : MonoBehaviour
 
     private void MenuInterface()
     {
-        //Change Camera view
-        mainCamera.SetActive(false);
-        playerCamera.SetActive(true);
-
         //Show the battle menu and have it handle inputs
-        battleMenu.SetActive(true);
+
         Debug.Log(battleMenu);
         battleMenu.GetComponent<MenuControl>().GetPlayer(gameObject);
         turnSent = true;
@@ -117,7 +123,6 @@ public class PlayerBase : MonoBehaviour
     public void TurnEnd()
     {
         turnSent = false;
-        playerCamera.SetActive(false);
         turnManager.GetComponent<TurnManager>().ChangeTurn();
     }
 }

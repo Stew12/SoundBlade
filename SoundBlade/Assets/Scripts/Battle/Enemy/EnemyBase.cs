@@ -24,9 +24,15 @@ public class EnemyBase : MonoBehaviour
     //Luck- affects the variation of attacks- more luck, less negative variation and more positive variation for attack damage
     public float luck = 2f;
 
+    //////////////////////Time variables for attacking//////////////////////
+    public float attackTime = 10;
+
+    private float atTime;
+    private bool timer = false;
+
     //////////////////////Important enemy variables//////////////////////
 
-    
+
     private float currentHP;
     private float attackVariation;
 
@@ -38,23 +44,45 @@ public class EnemyBase : MonoBehaviour
 
     private GameObject turnManager;
     private GameObject noteSpawner;
-
+    public GameObject battleMenu;
 
 
     // Start is called before the first frame update
     void Start()
     {
         noteSpawner = GameObject.FindGameObjectWithTag("NoteGenerator");
+        battleMenu = GameObject.FindGameObjectWithTag("BattleMenu");
+        turnManager = GameObject.FindGameObjectWithTag("TurnManager");
+
+        atTime = attackTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (timer)
+        {
+            atTime -= Time.deltaTime;
+        }
+
+        if (atTime <= 0)
+        {
+            EndEnemyTurn();
+            atTime = attackTime;
+            timer = false;
+        }
     }
 
     public void EnemyTurn()
     {
+        battleMenu.SetActive(false);
         noteSpawner.GetComponent<NoteGeneration>().enabled = true;
+        timer = true;
+    }
+
+    private void EndEnemyTurn()
+    {
+        noteSpawner.GetComponent<NoteGeneration>().enabled = false;
+        turnManager.GetComponent<TurnManager>().ChangeTurn();
     }
 }

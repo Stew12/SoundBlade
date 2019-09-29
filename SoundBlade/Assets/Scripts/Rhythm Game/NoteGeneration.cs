@@ -15,6 +15,7 @@ public class NoteGeneration : MonoBehaviour {
 
     public float currTime = 0f;
     public string[] noteList;
+    public string songFile;
     public bool enabled = false;
     
     private int index = 0;
@@ -40,7 +41,8 @@ public class NoteGeneration : MonoBehaviour {
 
     void readFile()
     {
-        noteList = System.IO.File.ReadAllLines(@"C:\Users\Lachlan\Desktop\GitHub\SoundBlade\SoundBlade\Assets\Scripts\Song1.txt");
+        //noteList = System.IO.File.ReadAllLines(@"Assets\Scripts\Song1.txt");
+        noteList = songFile.Split(';');
         string[] storedValues = new string[2];
         foreach (string line in noteList)
         {
@@ -82,11 +84,12 @@ public class NoteGeneration : MonoBehaviour {
                     break;
             }
 
-            if (enabled)
+            GameObject spawnedNote = Instantiate(note, spawnLocation.transform.position, Quaternion.Euler(0f, 0f, rotation));
+            spawnedNote.GetComponent<NoteSong>().direction = noteDirs[index];
+            spawnedNote.transform.SetParent(canvas.transform);
+            if (!enabled)
             {
-                GameObject spawnedNote = Instantiate(note, spawnLocation.transform.position, Quaternion.Euler(0f, 0f, rotation));
-                spawnedNote.GetComponent<NoteSong>().direction = noteDirs[index];
-                spawnedNote.transform.SetParent(canvas.transform);
+                spawnedNote.GetComponent<NoteSong>().Hide();
             }
 
             //Check if all notes have been not been played

@@ -10,6 +10,7 @@ public class NoteSong : MonoBehaviour
     public float speed = 10;
     public float testTime = 1;
     public bool test = false;
+    public bool hiding = false;
 
     private Image arrow;
 
@@ -36,12 +37,18 @@ public class NoteSong : MonoBehaviour
         }
     }
 
+    public void Hide()
+    {
+        hiding = true;
+        GetComponent<Image>().enabled = false;
+    }
+
     //Note hits one of the Note Hitters, make it disappear
     private void OnTriggerEnter2D(Collider2D other)
     {
         Destroy(gameObject);   
 
-        if (other.tag == "Party")
+        if ((other.tag == "Party") && (!hiding))
         {
             other.GetComponent<PlayerValues>().DamageFlag();
         }
