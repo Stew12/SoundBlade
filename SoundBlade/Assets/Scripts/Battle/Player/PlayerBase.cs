@@ -36,6 +36,8 @@ public class PlayerBase : MonoBehaviour
     private float defenseRegular;
 
     public float variation = 4;
+    private float cameraSpeed = 5;
+    private float xPos;
 
     //Turn- decides if player can act or not
     public bool turn = false;
@@ -48,11 +50,11 @@ public class PlayerBase : MonoBehaviour
 
     //This object is used to change the values of the party member's UI, such as hp and mp
     public GameObject PartyMemberUI;
+    public GameObject cameraObject;
 
     private GameObject turnManager;
     private GameObject battleMenu;
-
-
+    private GameObject mainCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -60,8 +62,10 @@ public class PlayerBase : MonoBehaviour
         currentHP = maxHP;
         currentMP = maxMP;
         defenseRegular = defense;
+        xPos = transform.position.x;
         turnManager = GameObject.FindGameObjectWithTag("TurnManager");
         battleMenu = GameObject.FindGameObjectWithTag("BattleMenu");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
@@ -80,11 +84,17 @@ public class PlayerBase : MonoBehaviour
 
         if ((turn) && (!turnSent))
             MenuInterface();
+
+        if (turn)
+        {
+            mainCamera.GetComponent<CameraSystem>().ZoomIn(gameObject);    
+        }
     }
 
     public void PlayerTurn()
     {
         turn = true;
+
     }
 
     //Is called when the party member misses a note
@@ -114,7 +124,6 @@ public class PlayerBase : MonoBehaviour
     {
         //Show the battle menu and have it handle inputs
 
-        Debug.Log(battleMenu);
         battleMenu.GetComponent<MenuControl>().GetPlayer(gameObject);
         turnSent = true;
     }
@@ -122,6 +131,7 @@ public class PlayerBase : MonoBehaviour
 
     public void TurnEnd()
     {
+        turn = false;
         turnSent = false;
         turnManager.GetComponent<TurnManager>().ChangeTurn();
     }
