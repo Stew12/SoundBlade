@@ -84,7 +84,7 @@ public class NoteGeneration : MonoBehaviour {
                     break;
             }
 
-            GameObject spawnedNote = Instantiate(note, spawnLocation.transform.position, Quaternion.Euler(0f, 0f, rotation));
+            GameObject spawnedNote = Instantiate(note, spawnLocation.transform.position, Quaternion.Euler(90, 0, rotation));
             spawnedNote.GetComponent<NoteSong>().direction = noteDirs[index];
             spawnedNote.transform.SetParent(canvas.transform);
             if (!enabled)

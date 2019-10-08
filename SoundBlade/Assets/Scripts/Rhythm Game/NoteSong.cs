@@ -12,12 +12,12 @@ public class NoteSong : MonoBehaviour
     public bool test = false;
     public bool hiding = false;
 
-    private Image arrow;
+    private SpriteRenderer arrow;
 
     // Start is called before the first frame update
     void Start()
     {
-        arrow = GetComponent<Image>();
+        arrow = GetComponent<SpriteRenderer>();
         SetColour();
     }
 
@@ -28,23 +28,23 @@ public class NoteSong : MonoBehaviour
 
         if (!test)
         {
-            transform.position += Vector3.down * speed * Time.deltaTime;
+            transform.position += -Vector3.forward * speed * Time.deltaTime;
         }
 
         if ((testTime > 0) && (test))
         {
-            transform.position += Vector3.down * speed * Time.deltaTime;
+            transform.position += -Vector3.forward * speed * Time.deltaTime;
         }
     }
 
     public void Hide()
     {
         hiding = true;
-        GetComponent<Image>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
     //Note hits one of the Note Hitters, make it disappear
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);   
 

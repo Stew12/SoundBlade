@@ -28,8 +28,15 @@ public class CameraSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+        if (zoomedIn)
+        {
             CameraZoomIn();
+        }
+        else
+        {
+            CameraZoomOut();
+        }
+            
 
     }
 
@@ -39,6 +46,8 @@ public class CameraSystem : MonoBehaviour
     //Note: Depending on camera angle, the camera's view may not zoom in on the player properly. To fix this, tweak the ZoomInLevel_Y and ZoomInLevel_Z public variables
     public void ZoomIn(GameObject playerObject)
     {
+        zoomedIn = true;
+
         newPos_Z = transform.position.z;
         newPos_Y = transform.position.y;
         newPos_X = playerObject.transform.position.x;
@@ -76,34 +85,18 @@ public class CameraSystem : MonoBehaviour
 
     private void CameraZoomOut()
     {
-        //Y Axis
-        if ((transform.position.y < defaultPos_Y))
+        //X Axis
+        if (transform.position.x < defaultPos_X)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + cameraSpeed * Time.deltaTime, transform.position.z);
+            transform.position = new Vector3(transform.position.x + cameraSpeed * Time.deltaTime, transform.position.y, transform.position.z);
         }
 
-        //Z Axis
-        if ((transform.position.z > defaultPos_Z))
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - cameraSpeed * Time.deltaTime);
-        }
 
-        //Determine if camera is left or right to player
-        if (newPos_X < defaultPos_X)
+
+        //X Axis
+        if (transform.position.x > defaultPos_X)
         {
-            //X Axis
-            if (transform.position.x < defaultPos_X)
-            {
-                transform.position = new Vector3(transform.position.x + cameraSpeed * Time.deltaTime, transform.position.y, transform.position.z);
-            }
-        }
-        else
-        {
-            //X Axis
-            if (transform.position.x > defaultPos_X)
-            {
-                transform.position = new Vector3(transform.position.x - cameraSpeed * Time.deltaTime, transform.position.y, transform.position.z);
-            }
+            transform.position = new Vector3(transform.position.x - cameraSpeed * Time.deltaTime, transform.position.y, transform.position.z);
         }
     }
 

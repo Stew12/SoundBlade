@@ -55,6 +55,8 @@ public class PlayerBase : MonoBehaviour
     private GameObject turnManager;
     private GameObject battleMenu;
     private GameObject mainCamera;
+    private GameObject enemy;
+    private SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +68,8 @@ public class PlayerBase : MonoBehaviour
         turnManager = GameObject.FindGameObjectWithTag("TurnManager");
         battleMenu = GameObject.FindGameObjectWithTag("BattleMenu");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -85,9 +89,20 @@ public class PlayerBase : MonoBehaviour
         if ((turn) && (!turnSent))
             MenuInterface();
 
+        //Zoom in on party member if it is their turn
         if (turn)
         {
             mainCamera.GetComponent<CameraSystem>().ZoomIn(gameObject);    
+        }
+
+        //Reduce opacity during enemy's turn so player can see oncoming notes
+        if (enemy.GetComponent<EnemyBase>().timer)
+        {
+            sprite.color = new Color(1f, 1f, 1f, 0.7f);
+        }
+        else
+        {
+            sprite.color = new Color(1f, 1f, 1f, 1f);
         }
     }
 

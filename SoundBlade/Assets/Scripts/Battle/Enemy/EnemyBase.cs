@@ -28,7 +28,7 @@ public class EnemyBase : MonoBehaviour
     public float attackTime = 10;
 
     private float atTime;
-    private bool timer = false;
+    public bool timer = false;
 
     //////////////////////Important enemy variables//////////////////////
 
@@ -45,6 +45,7 @@ public class EnemyBase : MonoBehaviour
     private GameObject turnManager;
     private GameObject noteSpawner;
     public GameObject battleMenu;
+    private GameObject mainCamera;
 
 
     // Start is called before the first frame update
@@ -53,6 +54,7 @@ public class EnemyBase : MonoBehaviour
         noteSpawner = GameObject.FindGameObjectWithTag("NoteGenerator");
         battleMenu = GameObject.FindGameObjectWithTag("BattleMenu");
         turnManager = GameObject.FindGameObjectWithTag("TurnManager");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
         atTime = attackTime;
     }
@@ -71,10 +73,12 @@ public class EnemyBase : MonoBehaviour
             atTime = attackTime;
             timer = false;
         }
+
     }
 
     public void EnemyTurn()
     {
+        mainCamera.GetComponent<CameraSystem>().ZoomOut();
         battleMenu.SetActive(false);
         noteSpawner.GetComponent<NoteGeneration>().enabled = true;
         timer = true;

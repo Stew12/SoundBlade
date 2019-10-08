@@ -4,19 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class NoteReciever : MonoBehaviour {
-    private Collider2D noteCollide;
+    private BoxCollider noteCollide;
     public string inputDir = "Up";
 
     public float maxTime = 0.25f, cMaxtime = 0.5f;
     private float timeLeft, ctimeLeft;
-    private Image image;
+    private SpriteRenderer image;
 
     // Use this for initialization
     void Start () {
         timeLeft = 0;
         ctimeLeft = 0;
-        image = GetComponent<Image>();
-        noteCollide = GetComponent<CircleCollider2D>();
+        image = GetComponent<SpriteRenderer>();
+        noteCollide = GetComponent<BoxCollider>();
         noteCollide.enabled = false;
     }
 	
