@@ -30,7 +30,7 @@ public class NoteReciever : MonoBehaviour {
         }
         else
         {
-            image.color = new Color(1f, 1f, 1f, 1f);
+            //image.color = new Color(1f, 1f, 1f, 1f);
             noteCollide.enabled = false;
         }
 
@@ -45,7 +45,7 @@ public class NoteReciever : MonoBehaviour {
     private void recieverActivate()
     {
         noteCollide.enabled = true;
-        image.color = new Color(1f, 1f, 1f, .7f);
+       // image.color = new Color(1f, 1f, 1f, .7f);
         timeLeft = maxTime;
         ctimeLeft = cMaxtime;
     }
