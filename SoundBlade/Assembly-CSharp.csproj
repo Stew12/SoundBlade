@@ -71,8 +71,6 @@
     <Compile Include="Assets\Scripts\Battle\Player\MenuControl.cs" />
     <Compile Include="Assets\Scripts\Battle\Player\PlayerBase.cs" />
     <Compile Include="Assets\Scripts\Battle\Player\PlayerValues.cs" />
-    <Compile Include="Assets\Scripts\Music Editor\MusicBar.cs" />
-    <Compile Include="Assets\Scripts\Music Editor\NoteRecorded.cs" />
     <Compile Include="Assets\Scripts\Rhythm Game\MusicPlayer.cs" />
     <Compile Include="Assets\Scripts\Rhythm Game\NoteGeneration.cs" />
     <Compile Include="Assets\Scripts\Rhythm Game\NoteMove.cs" />
