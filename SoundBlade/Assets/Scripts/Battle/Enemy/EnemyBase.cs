@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBase : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class EnemyBase : MonoBehaviour
 
     private float currentHP;
     private float attackVariation;
+    public float variation = 4;
 
     //Turn- decides if enemy can act or not
     public bool turn = false;
@@ -47,6 +49,9 @@ public class EnemyBase : MonoBehaviour
     public GameObject battleMenu;
     private GameObject mainCamera;
 
+    //////////////////////UI//////////////////////
+
+    public Text EHPUI;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +62,10 @@ public class EnemyBase : MonoBehaviour
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
         atTime = attackTime;
+
+        currentHP = maxHP;
+        int dmgLbl = (int)currentHP;
+        EHPUI.text = dmgLbl.ToString();
     }
 
     // Update is called once per frame
@@ -73,6 +82,26 @@ public class EnemyBase : MonoBehaviour
             atTime = attackTime;
             timer = false;
         }
+
+    }
+
+    //Called when player hits enemy during attack phase
+    public void TakeDamage(GameObject player)
+    {
+        //Takes into consideration attacking party member's attack and luck
+        float playerAttackStat = player.GetComponent<PlayerBase>().attack;
+        float playerLuckStat = player.GetComponent<PlayerBase>().luck;
+
+        //Get varation (randomised, luck value affecting)
+        float totalVariation = Random.Range(-variation, variation + playerLuckStat);
+
+        //Damage formula
+        float damage = (playerAttackStat * playerAttackStat / (playerAttackStat + defense)) + totalVariation;
+        //Subtract damage from hp
+        currentHP -= damage;
+        //Send new value to the UI to inform the player
+        int dmgLbl = (int)currentHP;
+        EHPUI.text = dmgLbl.ToString();
 
     }
 

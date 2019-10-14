@@ -299,13 +299,15 @@
 /define:ENABLE_VSTU
 /define:CSHARP_7_OR_LATER
 /define:CSHARP_7_3_OR_NEWER
-Assets\Camera.cs
+Assets\Scripts\Battle\Attack.cs
 Assets\Scripts\Battle\Enemy\EnemyBase.cs
+Assets\Scripts\Battle\HitBox.cs
 Assets\Scripts\Battle\Other\CameraSystem.cs
 Assets\Scripts\Battle\Other\TurnManager.cs
 Assets\Scripts\Battle\Player\MenuControl.cs
 Assets\Scripts\Battle\Player\PlayerBase.cs
 Assets\Scripts\Battle\Player\PlayerValues.cs
+Assets\Scripts\Camera.cs
 "Assets\Scripts\Music Editor\MusicBar.cs"
 "Assets\Scripts\Music Editor\NoteRecorded.cs"
 "Assets\Scripts\Rhythm Game\MusicPlayer.cs"

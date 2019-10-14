@@ -10,6 +10,7 @@ TagManager:
   - TurnManager
   - NoteGenerator
   - BattleMenu
+  - HitBox
   layers:
   - Default
   - TransparentFX
@@ -44,6 +45,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: New Layer
+    uniqueID: 1580838147
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

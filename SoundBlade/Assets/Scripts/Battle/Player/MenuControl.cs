@@ -5,8 +5,10 @@ using UnityEngine;
 public class MenuControl : MonoBehaviour
 {
     public GameObject currentPlayer;
+    public GameObject attackArrow;
+    private GameObject camera;
     public GameObject[] MenuPanels = new GameObject[8];
-    private int defaultPanelID, panelID;
+    private int defaultPanelID = -1, panelID = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +17,7 @@ public class MenuControl : MonoBehaviour
         {
             MenuPanels[i] = gameObject.transform.GetChild(i).gameObject;
         }
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
@@ -105,6 +108,19 @@ public class MenuControl : MonoBehaviour
 
                 Debug.Log("Attack");
 
+                //End Turn
+                foreach (GameObject panel in MenuPanels)
+                {
+                    panel.SetActive(false);
+                }
+
+                defaultPanelID = -1;
+                panelID = -1;
+
+                attackArrow.SetActive(true);
+                attackArrow.GetComponent<Attack>().player = currentPlayer;
+                gameObject.SetActive(false);
+
             }
 
         }
@@ -144,8 +160,8 @@ public class MenuControl : MonoBehaviour
                     panel.SetActive(false);
                 }
 
-                defaultPanelID = 0;
-                panelID = 0;
+                defaultPanelID = -1;
+                panelID = -1;
 
                 currentPlayer.GetComponent<PlayerBase>().TurnEnd();
 

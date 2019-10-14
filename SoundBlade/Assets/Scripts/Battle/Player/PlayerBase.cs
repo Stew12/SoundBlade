@@ -21,9 +21,6 @@ public class PlayerBase : MonoBehaviour
     //Speed- Aka max attack time- affects how long player has during attack phase to attack the enemy- higher speed = more attack time
     public float speed = 10f;
 
-    //Fortitude- aggregate fortitude of all party members are used in calculating how long the enemy has during its attack phase- more fortitude = less attack time
-    public float fortitude = 20f;
-
     //Luck- affects the variation of attacks- more luck, less negative variation and more positive variation for attack damage
     public float luck = 3f;
 
@@ -57,6 +54,9 @@ public class PlayerBase : MonoBehaviour
     private GameObject mainCamera;
     private GameObject enemy;
     private SpriteRenderer sprite;
+
+    //Array for the pattern of attack directions
+    public string[] attackDirs = new string[4];
 
     // Start is called before the first frame update
     void Start()

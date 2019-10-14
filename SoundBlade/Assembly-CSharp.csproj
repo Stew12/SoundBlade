@@ -60,10 +60,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Camera.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemy\EnemyBase.cs" />
+    <Compile Include="Assets\Scripts\Battle\Other\Camera.cs" />
     <Compile Include="Assets\Scripts\Battle\Other\CameraSystem.cs" />
     <Compile Include="Assets\Scripts\Battle\Other\TurnManager.cs" />
+    <Compile Include="Assets\Scripts\Battle\Player\Attacking\Attack.cs" />
+    <Compile Include="Assets\Scripts\Battle\Player\Attacking\AttackArrow2.cs" />
+    <Compile Include="Assets\Scripts\Battle\Player\Attacking\AttackGraphic.cs" />
+    <Compile Include="Assets\Scripts\Battle\Player\HitBox.cs" />
     <Compile Include="Assets\Scripts\Battle\Player\MenuControl.cs" />
     <Compile Include="Assets\Scripts\Battle\Player\PlayerBase.cs" />
     <Compile Include="Assets\Scripts\Battle\Player\PlayerValues.cs" />

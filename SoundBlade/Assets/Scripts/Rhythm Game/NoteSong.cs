@@ -12,12 +12,14 @@ public class NoteSong : MonoBehaviour
     public bool test = false;
     public bool hiding = false;
 
+    private GameObject noteGen;
     private SpriteRenderer arrow;
-
+    
     // Start is called before the first frame update
     void Start()
     {
         arrow = GetComponent<SpriteRenderer>();
+        noteGen = GameObject.FindGameObjectWithTag("NoteGenerator");
         SetColour();
     }
 
@@ -35,6 +37,11 @@ public class NoteSong : MonoBehaviour
         {
             transform.position += -Vector3.forward * speed * Time.deltaTime;
         }
+
+        if (!noteGen.GetComponent<NoteGeneration>().enabled)
+        {
+            Hide();
+        }
     }
 
     public void Hide()
@@ -48,9 +55,9 @@ public class NoteSong : MonoBehaviour
     {
         Destroy(gameObject);   
 
-        if ((other.tag == "Party") && (!hiding))
+        if ((other.tag == "HitBox") && (!hiding))
         {
-            other.GetComponent<PlayerValues>().DamageFlag();
+            other.GetComponent<HitBox>().DamagePlayer();
         }
     }
 
@@ -59,16 +66,16 @@ public class NoteSong : MonoBehaviour
         switch (direction)
         {
             case "Right":
-                arrow.color = Color.yellow;
+                arrow.color = Color.green;
                 break;
             case "Up":
                 arrow.color = Color.red;
                 break;
             case "Down":
-                arrow.color = Color.green;
+                arrow.color = Color.cyan;
                 break;
             case "Left":
-                arrow.color = Color.magenta;
+                arrow.color = Color.yellow;
                 break;
         }
     }
