@@ -143,6 +143,7 @@ public class PlayerBase : MonoBehaviour
     {
         //Show the battle menu and have it handle inputs
 
+        battleMenu.GetComponent<MenuControl>().currentPlayer = gameObject;
         battleMenu.GetComponent<MenuControl>().GetPlayer(gameObject);
         turnSent = true;
     }
