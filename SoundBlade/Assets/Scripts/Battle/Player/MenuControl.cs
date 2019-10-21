@@ -6,9 +6,12 @@ public class MenuControl : MonoBehaviour
 {
     public GameObject currentPlayer;
     public GameObject attackArrow;
+    public GameObject SkillMenu;
+    public GameObject ItemMenu;
     private GameObject camera;
     public GameObject[] MenuPanels = new GameObject[8];
     private int defaultPanelID = -1, panelID = -1;
+    private bool startup = true;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +37,11 @@ public class MenuControl : MonoBehaviour
             defaultPanelID = panelID;
         }
         
+        if (startup)
+        {
+            startup = false;
+            gameObject.SetActive(false);
+        }
        
     }
 
@@ -131,7 +139,12 @@ public class MenuControl : MonoBehaviour
 
                 Debug.Log("Skills");
 
+                defaultPanelID = -1;
+                panelID = -1;
 
+                SkillMenu.SetActive(true);
+                SkillMenu.GetComponent<SkillMenuControl>().currentPlayer = currentPlayer;
+                gameObject.SetActive(false);
 
             }
         }
@@ -142,7 +155,12 @@ public class MenuControl : MonoBehaviour
 
                 Debug.Log("Items");
 
+                defaultPanelID = -1;
+                panelID = -1;
 
+                ItemMenu.SetActive(true);
+                ItemMenu.GetComponent<ItemMenuControl>().currentPlayer = currentPlayer;
+                gameObject.SetActive(false);
             }
         }
         else if ((Input.GetKeyDown(KeyCode.DownArrow) || (Input.GetKeyDown(KeyCode.Z))))

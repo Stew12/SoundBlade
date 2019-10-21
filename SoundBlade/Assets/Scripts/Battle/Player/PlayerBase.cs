@@ -42,6 +42,9 @@ public class PlayerBase : MonoBehaviour
 
     public bool defenseBuff = false;
 
+    //////////////////////Skill and Item Arrays//////////////////////
+    public string[] Skills = new string[3];
+    public string[] Items = new string[3];
 
     //////////////////////GameObjects to call on//////////////////////
 
@@ -57,6 +60,7 @@ public class PlayerBase : MonoBehaviour
 
     //Array for the pattern of attack directions
     public string[] attackDirs = new string[4];
+
 
     // Start is called before the first frame update
     void Start()
