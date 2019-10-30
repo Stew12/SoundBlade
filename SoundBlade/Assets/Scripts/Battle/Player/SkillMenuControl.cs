@@ -7,6 +7,7 @@ public class SkillMenuControl : MonoBehaviour
 {
     public GameObject currentPlayer;
     public GameObject[] MenuPanels = new GameObject[8];
+    public GameObject[] SkillObjects = new GameObject[8];
     private GameObject battleMenu;
     public Text[] labelCollection1 = new Text[3], labelCollection2 = new Text[3], labelCollection3 = new Text[3];
     private int defaultPanelID = -1, panelID = -1;
@@ -209,5 +210,67 @@ public class SkillMenuControl : MonoBehaviour
 
 
     }
+
+    public void SkillActivate(string skillname)
+    {
+        GameObject animObj;
+
+        switch (skillname)
+        {
+            //Thunder Buff: electric attack, raises attack
+            case "Thunder Buff":
+                animObj = SkillObjects[0];
+        break;
+            //Flame Chord: fire damaging attack, keyboard
+            case "Flame Chord":
+                animObj = SkillObjects[1];
+        break;
+            //Thunder Debuff: ice attack, lowers enemy attack
+            case "Ice Debuff":
+                animObj = SkillObjects[2];
+        break;
+            //Healing Wind: heals whole party, flute
+            case "Healing Wind":
+                animObj = SkillObjects[3];
+                Instantiate(animObj, currentPlayer.transform.position, Quaternion.identity);
+                
+                //Heal self
+                currentPlayer.GetComponent<PlayerBase>().currentHP += currentPlayer.GetComponent<PlayerBase>().maxHP *= 0.5f;
+                if (currentPlayer.GetComponent<PlayerBase>().currentHP > currentPlayer.GetComponent<PlayerBase>().maxHP)
+                {
+                    currentPlayer.GetComponent<PlayerBase>().currentHP = currentPlayer.GetComponent<PlayerBase>().maxHP;
+                }
+                break;
+
+        }
+
+        
+    }
+
+public string SkillDescription(string skillname)
+{
+    string desc = " ";
+    switch (skillname)
+    {
+        //Thunder Buff: electric attack, raises attack
+        case "Thunder Buff":
+            desc = "";
+            break;
+        //Flame Chord: fire damaging attack, keyboard
+        case "Flame Chord":
+            desc = "";
+            break;
+        //Thunder Debuff: ice attack, lowers enemy attack
+        case "Ice Debuff":
+            desc = "";
+            break;
+        //Healing Wind: heals whole party, flute
+        case "Healing Wind":
+            desc = "";
+            break;
+    }
+    return desc;
+}
+    
 
 }

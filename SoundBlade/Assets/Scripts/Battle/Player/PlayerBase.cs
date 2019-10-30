@@ -26,8 +26,8 @@ public class PlayerBase : MonoBehaviour
 
     //////////////////////Important party member variables//////////////////////
 
-    private float currentHP;
-    private float currentMP;
+    public float currentHP;
+    public float currentMP;
     private float attackVariation;
     private float atkTime;
     private float defenseRegular;
