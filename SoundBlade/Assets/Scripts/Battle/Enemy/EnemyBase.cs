@@ -34,9 +34,10 @@ public class EnemyBase : MonoBehaviour
     //////////////////////Important enemy variables//////////////////////
 
 
-    private float currentHP;
+    public float currentHP;
     private float attackVariation;
     public float variation = 4;
+    private int dmgLbl = 0;
 
     //Turn- decides if enemy can act or not
     public bool turn = false;
@@ -64,7 +65,7 @@ public class EnemyBase : MonoBehaviour
         atTime = attackTime;
 
         currentHP = maxHP;
-        int dmgLbl = (int)currentHP;
+        dmgLbl = (int)currentHP;
         EHPUI.text = dmgLbl.ToString();
     }
 
@@ -83,6 +84,9 @@ public class EnemyBase : MonoBehaviour
             timer = false;
         }
 
+        //Send new value to the UI to inform the player
+        dmgLbl = (int)currentHP;
+        EHPUI.text = dmgLbl.ToString();
     }
 
     //Called when player hits enemy during attack phase
@@ -99,10 +103,6 @@ public class EnemyBase : MonoBehaviour
         float damage = (playerAttackStat * playerAttackStat / (playerAttackStat + defense)) + totalVariation;
         //Subtract damage from hp
         currentHP -= damage;
-        //Send new value to the UI to inform the player
-        int dmgLbl = (int)currentHP;
-        EHPUI.text = dmgLbl.ToString();
-
     }
 
     public void EnemyTurn()

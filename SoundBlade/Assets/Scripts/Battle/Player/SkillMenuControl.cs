@@ -11,6 +11,9 @@ public class SkillMenuControl : MonoBehaviour
     private GameObject battleMenu;
     public Text[] labelCollection1 = new Text[3], labelCollection2 = new Text[3], labelCollection3 = new Text[3];
     private int defaultPanelID = -1, panelID = -1;
+    private GameObject enemy;
+    private bool timer;
+    private float animTime = 5f;
 
     private bool startup = true;
 
@@ -23,11 +26,19 @@ public class SkillMenuControl : MonoBehaviour
         }
 
         battleMenu = GameObject.FindGameObjectWithTag("BattleMenu");
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (timer)
+        animTime -= Time.time;
+        if (animTime <= 0)
+        {
+
+        }
+
         if (currentPlayer != null)
         {
             MenuSelect();
@@ -130,7 +141,7 @@ public class SkillMenuControl : MonoBehaviour
 
     }
 
-    private void PanelsReset()
+    public void PanelsReset()
     {
 
 
@@ -160,6 +171,7 @@ public class SkillMenuControl : MonoBehaviour
                 defaultPanelID = -1;
                 panelID = -1;
 
+                SkillActivate(currentPlayer.GetComponent<PlayerBase>().Skills[0]);
 
                 //End turn when skill aniamtion finishes
                 // currentPlayer.GetComponent<PlayerBase>().TurnEnd();
@@ -213,38 +225,62 @@ public class SkillMenuControl : MonoBehaviour
 
     public void SkillActivate(string skillname)
     {
-        GameObject animObj;
+        GameObject animObj, spawnedObj;
+        float yOffset = 5f;
+        float zOffset = 2f;
 
         switch (skillname)
         {
             //Thunder Buff: electric attack, raises attack
-            case "Thunder Buff":
+            case "Elec Tome":
                 animObj = SkillObjects[0];
-        break;
+                spawnedObj = Instantiate(animObj, new Vector3(enemy.transform.position.x, enemy.transform.position.y - yOffset, enemy.transform.position.z - zOffset), Quaternion.identity);
+
+                // Deal large amount of damage, no other effects
+                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(3, 15, false, false);
+                break;
+
             //Flame Chord: fire damaging attack, keyboard
-            case "Flame Chord":
+            case "Fiery Voice":
                 animObj = SkillObjects[1];
-        break;
-            //Thunder Debuff: ice attack, lowers enemy attack
-            case "Ice Debuff":
+                spawnedObj = Instantiate(animObj, new Vector3(enemy.transform.position.x, enemy.transform.position.y - yOffset, enemy.transform.position.z - zOffset), Quaternion.identity);
+
+                //Deal large amount of damage, no other effects
+                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(5, 25, false, false);
+                break;
+
+            //Ice Debuff: ice attack, lowers enemy attack
+            case "Ice Clang":
                 animObj = SkillObjects[2];
-        break;
+                spawnedObj = Instantiate(animObj, new Vector3(enemy.transform.position.x, enemy.transform.position.y - yOffset, enemy.transform.position.z - zOffset), Quaternion.identity);
+
+                // Deal large amount of damage, no other effects
+                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(3, 7, false, false);
+                break;
+
             //Healing Wind: heals whole party, flute
             case "Healing Wind":
                 animObj = SkillObjects[3];
-                Instantiate(animObj, currentPlayer.transform.position, Quaternion.identity);
-                
+                spawnedObj = Instantiate(animObj, new Vector3(currentPlayer.transform.position.x, currentPlayer.transform.position.y - yOffset, currentPlayer.transform.position.z), Quaternion.identity);
+
                 //Heal self
                 currentPlayer.GetComponent<PlayerBase>().currentHP += currentPlayer.GetComponent<PlayerBase>().maxHP *= 0.5f;
                 if (currentPlayer.GetComponent<PlayerBase>().currentHP > currentPlayer.GetComponent<PlayerBase>().maxHP)
                 {
                     currentPlayer.GetComponent<PlayerBase>().currentHP = currentPlayer.GetComponent<PlayerBase>().maxHP;
                 }
+                currentPlayer.GetComponent<PlayerBase>().SetHPLabel();
+
+                //Just Reduce MP- non-damaging
+                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(0, 10, false, false);
                 break;
+
+
 
         }
 
-        
+        currentPlayer.GetComponent<PlayerBase>().turn = false;
+        currentPlayer.GetComponent<PlayerBase>().turnSent = false;
     }
 
 public string SkillDescription(string skillname)
@@ -271,6 +307,7 @@ public string SkillDescription(string skillname)
     }
     return desc;
 }
-    
+
+
 
 }

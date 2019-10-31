@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2553398388865712746}
   - component: {fileID: 4594494780418987045}
   - component: {fileID: 2668128574820153365}
+  - component: {fileID: 6700630142639800769}
   m_Layer: 0
   m_Name: Ice1_0
   m_TagString: Untagged
@@ -99,3 +100,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6700630142639800769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177605138975059416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97a0c1cb48b10e4cab169c9eb87f335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animTime: 10
+  currentPlayer: {fileID: 0}

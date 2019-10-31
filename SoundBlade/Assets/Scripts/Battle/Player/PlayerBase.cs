@@ -38,7 +38,7 @@ public class PlayerBase : MonoBehaviour
 
     //Turn- decides if player can act or not
     public bool turn = false;
-    private bool turnSent = false;
+    public bool turnSent = false;
 
     public bool defenseBuff = false;
 
@@ -73,7 +73,7 @@ public class PlayerBase : MonoBehaviour
         battleMenu = GameObject.FindGameObjectWithTag("BattleMenu");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         enemy = GameObject.FindGameObjectWithTag("Enemy");
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -113,7 +113,7 @@ public class PlayerBase : MonoBehaviour
     public void PlayerTurn()
     {
         turn = true;
-
+       defenseBuff = false;
     }
 
     //Is called when the party member misses a note
@@ -154,5 +154,46 @@ public class PlayerBase : MonoBehaviour
         turn = false;
         turnSent = false;
         turnManager.GetComponent<TurnManager>().ChangeTurn();
+    }
+
+    public void SetHPLabel()
+    {
+        PartyMemberUI.GetComponent<PlayerValues>().MPChange((int)currentHP);
+    }
+
+    //Is called when a party member casts a damaging spell
+    public void DealSpellDamage(float damageLevel, float mpCost, bool buffing, bool debuffing)
+    {
+
+        //Get varation (randomised, luck value affecting)
+        float totalVariation = Random.Range(-variation, variation + luck);
+
+        //Damage formula
+        float damage = (damageLevel * (attack * attack) / (attack + enemy.GetComponent<EnemyBase>().defense)) + totalVariation;
+
+        if (debuffing)
+        {
+            enemy.GetComponent<EnemyBase>().attack /= 1.5f;
+        }
+        else if (buffing)
+        {
+            attack *= 1.5f;
+        }
+
+        //Reduce MP
+        currentMP -= mpCost;
+
+        PartyMemberUI.GetComponent<PlayerValues>().MPChange((int)currentMP);
+
+        //If run out of mp for skill, remove it from the player's list
+        if (currentMP < mpCost)
+        {
+            Skills[0] = "";
+        }
+
+        
+
+        //Subtract damage from hp
+        enemy.GetComponent<EnemyBase>().currentHP -= damage;
     }
 }

@@ -144,6 +144,7 @@ public class MenuControl : MonoBehaviour
 
                 SkillMenu.SetActive(true);
                 SkillMenu.GetComponent<SkillMenuControl>().currentPlayer = currentPlayer;
+                SkillMenu.GetComponent<SkillMenuControl>().PanelsReset();
                 gameObject.SetActive(false);
 
             }
