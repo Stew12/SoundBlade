@@ -1,0 +1,10 @@
+Bug List:
+
+-Selecting a depleted skill stalls game
+-Camera glitch- usually gets stuck around 2nd and 3rd member
+-"Blue seems easiest to miss attacking, green seems easiest to miss defending"
+-Too big of a cooldown for notehitters with close together notes
+-"good great" marker goes blank around 60-70 or so
+-Timer issues- usually displays as a 00
+-Quickly pressing directions breaks game- some limits there
+-Some spelling errors in tutorial
