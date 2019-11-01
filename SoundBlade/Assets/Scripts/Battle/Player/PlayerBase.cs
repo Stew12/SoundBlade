@@ -83,7 +83,7 @@ public class PlayerBase : MonoBehaviour
 
         if (defenseBuff)
         {
-            defense *= 1.5f;
+            defense *= 1.25f;
         }
         else
         {
@@ -120,7 +120,7 @@ public class PlayerBase : MonoBehaviour
     public void TakeDamage(float enemyAttack, float enemyluck)
     {
         //Get varation (randomised, luck value affecting)
-        float totalVariation = Random.Range(-variation, variation + enemyluck);
+        float totalVariation = Random.Range(variation, variation + enemyluck);
 
         //Damage formula
         float damage = (enemyAttack * enemyAttack / (enemyAttack + defense)) + totalVariation;
@@ -135,7 +135,13 @@ public class PlayerBase : MonoBehaviour
     {
         if (currentHP <= 0)
         {
-            //Faint
+            //Remove from turn manager
+            turnManager.GetComponent<TurnManager>().battlers.Remove(gameObject);
+
+            //Increase enemy attack for every party member defeated
+            enemy.GetComponent<EnemyBase>().attack *= 1.5f;
+
+            Destroy(gameObject);
         }
     }
 
@@ -158,7 +164,7 @@ public class PlayerBase : MonoBehaviour
 
     public void SetHPLabel()
     {
-        PartyMemberUI.GetComponent<PlayerValues>().MPChange((int)currentHP);
+        PartyMemberUI.GetComponent<PlayerValues>().HPChange((int)currentHP);
     }
 
     //Is called when a party member casts a damaging spell
@@ -166,10 +172,10 @@ public class PlayerBase : MonoBehaviour
     {
 
         //Get varation (randomised, luck value affecting)
-        float totalVariation = Random.Range(-variation, variation + luck);
+        float totalVariation = Random.Range(variation, variation + luck);
 
         //Damage formula
-        float damage = (damageLevel * (attack * attack) / (attack + enemy.GetComponent<EnemyBase>().defense)) + totalVariation;
+        float damage = ((attack * attack) / (attack + enemy.GetComponent<EnemyBase>().defense)) + totalVariation;
 
         if (debuffing)
         {
@@ -194,6 +200,6 @@ public class PlayerBase : MonoBehaviour
         
 
         //Subtract damage from hp
-        enemy.GetComponent<EnemyBase>().currentHP -= damage;
+        enemy.GetComponent<EnemyBase>().currentHP -= damageLevel * damage;
     }
 }

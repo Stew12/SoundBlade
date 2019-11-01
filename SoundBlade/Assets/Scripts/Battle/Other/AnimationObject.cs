@@ -7,6 +7,7 @@ public class AnimationObject : MonoBehaviour
     private float animTime = 1f;
     public GameObject currentPlayer;
     private GameObject tm;
+    public bool changeTurn = true;
 
     // Start is called before the first frame update
 
@@ -21,7 +22,8 @@ public class AnimationObject : MonoBehaviour
         animTime -= Time.deltaTime;
         if (animTime <= 0)
         {
-            tm.GetComponent<TurnManager>().ChangeTurn();
+            if (changeTurn)
+                tm.GetComponent<TurnManager>().ChangeTurn();
             Destroy(gameObject);
         }
     }

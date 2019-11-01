@@ -12,6 +12,7 @@ public class SkillMenuControl : MonoBehaviour
     public Text[] labelCollection1 = new Text[3], labelCollection2 = new Text[3], labelCollection3 = new Text[3];
     private int defaultPanelID = -1, panelID = -1;
     private GameObject enemy;
+    private GameObject turnManager;
     private bool timer;
     private float animTime = 5f;
 
@@ -27,6 +28,7 @@ public class SkillMenuControl : MonoBehaviour
 
         battleMenu = GameObject.FindGameObjectWithTag("BattleMenu");
         enemy = GameObject.FindGameObjectWithTag("Enemy");
+        turnManager = GameObject.FindGameObjectWithTag("TurnManager");
     }
 
     // Update is called once per frame
@@ -237,7 +239,7 @@ public class SkillMenuControl : MonoBehaviour
                 spawnedObj = Instantiate(animObj, new Vector3(enemy.transform.position.x, enemy.transform.position.y - yOffset, enemy.transform.position.z - zOffset), Quaternion.identity);
 
                 // Deal large amount of damage, no other effects
-                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(3, 15, false, false);
+                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(2.5f, 15, false, false);
                 break;
 
             //Flame Chord: fire damaging attack, keyboard
@@ -255,28 +257,36 @@ public class SkillMenuControl : MonoBehaviour
                 spawnedObj = Instantiate(animObj, new Vector3(enemy.transform.position.x, enemy.transform.position.y - yOffset, enemy.transform.position.z - zOffset), Quaternion.identity);
 
                 // Deal large amount of damage, no other effects
-                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(3, 7, false, false);
+                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(2, 7, false, false);
                 break;
 
             //Healing Wind: heals whole party, flute
             case "Healing Wind":
                 animObj = SkillObjects[3];
-                spawnedObj = Instantiate(animObj, new Vector3(currentPlayer.transform.position.x, currentPlayer.transform.position.y - yOffset, currentPlayer.transform.position.z), Quaternion.identity);
+                Instantiate(animObj, new Vector3(currentPlayer.transform.position.x, currentPlayer.transform.position.y, currentPlayer.transform.position.z), Quaternion.identity);
 
-                //Heal self
-                currentPlayer.GetComponent<PlayerBase>().currentHP += currentPlayer.GetComponent<PlayerBase>().maxHP *= 0.5f;
-                if (currentPlayer.GetComponent<PlayerBase>().currentHP > currentPlayer.GetComponent<PlayerBase>().maxHP)
+                //Heal all party members
+                foreach (GameObject battler in turnManager.GetComponent<TurnManager>().battlers)
                 {
-                    currentPlayer.GetComponent<PlayerBase>().currentHP = currentPlayer.GetComponent<PlayerBase>().maxHP;
+                    if (battler.tag == "Player")
+                    {
+                        spawnedObj = Instantiate(animObj, new Vector3(battler.transform.position.x, battler.transform.position.y, battler.transform.position.z), Quaternion.identity);
+                        spawnedObj.GetComponent<AnimationObject>().changeTurn = false;
+
+                        battler.GetComponent<PlayerBase>().currentHP /= 0.5f;
+                        if (battler.GetComponent<PlayerBase>().currentHP > battler.GetComponent<PlayerBase>().maxHP)
+                        {
+                            battler.GetComponent<PlayerBase>().currentHP = battler.GetComponent<PlayerBase>().maxHP;
+                        }
+
+                       battler.GetComponent<PlayerBase>().SetHPLabel();
+
+                        //Just Reduce MP- non-damaging
+                        currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(0, 10, false, false);
+                    }
                 }
-                currentPlayer.GetComponent<PlayerBase>().SetHPLabel();
-
-                //Just Reduce MP- non-damaging
-                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(0, 10, false, false);
+                
                 break;
-
-
-
         }
 
         currentPlayer.GetComponent<PlayerBase>().turn = false;

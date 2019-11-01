@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EnemyBase : MonoBehaviour
@@ -82,6 +83,11 @@ public class EnemyBase : MonoBehaviour
             EndEnemyTurn();
             atTime = attackTime;
             timer = false;
+        }
+
+        if (currentHP <= 0)
+        {
+            SceneManager.LoadScene("Win Screen");
         }
 
         //Send new value to the UI to inform the player

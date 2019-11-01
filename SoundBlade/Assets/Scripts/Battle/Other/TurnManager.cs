@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurnManager : MonoBehaviour
 {
-    public GameObject[] battlers = new GameObject[5];
+    public List<GameObject> battlers = new List<GameObject>();
     //public GameObject[] battlerCameras = new GameObject[5];
     private GameObject mainCamera;
     private bool started = false;
@@ -30,6 +31,13 @@ public class TurnManager : MonoBehaviour
                 StartGame();
             }
         }
+
+        //Check if all party members dead
+        if (battlers.Count < 2)
+        {
+            SceneManager.LoadScene("Game Over");
+        }
+
     }
 
     public void ChangeTurn()
