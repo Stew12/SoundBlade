@@ -148,22 +148,7 @@ public class ItemMenuControl : MonoBehaviour
             if (defaultPanelID == 0)
             {
 
-                Debug.Log("Item1");
-
-                //End Turn
-                foreach (GameObject panel in MenuPanels)
-                {
-                    panel.SetActive(false);
-                }
-
-                defaultPanelID = -1;
-                panelID = -1;
-
-
-                //End turn when skill aniamtion finishes
-                // currentPlayer.GetComponent<PlayerBase>().TurnEnd();
-                gameObject.SetActive(false);
-
+               
             }
 
         }

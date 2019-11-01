@@ -127,6 +127,7 @@ public class MenuControl : MonoBehaviour
 
                 attackArrow.SetActive(true);
                 attackArrow.GetComponent<Attack>().player = currentPlayer;
+                attackArrow.GetComponent<Attack>().SetArrrow();
                 gameObject.SetActive(false);
 
             }

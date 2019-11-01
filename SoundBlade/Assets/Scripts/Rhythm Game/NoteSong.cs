@@ -13,6 +13,7 @@ public class NoteSong : MonoBehaviour
     public bool hiding = false;
 
     private GameObject noteGen;
+    private GameObject comboMeter;
     private SpriteRenderer arrow;
     
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class NoteSong : MonoBehaviour
     {
         arrow = GetComponent<SpriteRenderer>();
         noteGen = GameObject.FindGameObjectWithTag("NoteGenerator");
+        comboMeter = GameObject.FindGameObjectWithTag("Combo");
         SetColour();
     }
 
@@ -58,6 +60,16 @@ public class NoteSong : MonoBehaviour
         if ((other.tag == "HitBox") && (!hiding))
         {
             other.GetComponent<HitBox>().DamagePlayer();
+
+            //Reset the combo if hit
+            comboMeter.GetComponent<ComboSystem>().currCombo = 0;
+            comboMeter.GetComponent<ComboSystem>().LateText();
+        }
+        else if ((other.tag == "NoteHit") && (!hiding))
+        {
+            //Add to the combo
+            comboMeter.GetComponent<ComboSystem>().currCombo++;
+            comboMeter.GetComponent<ComboSystem>().late = false;
         }
     }
 

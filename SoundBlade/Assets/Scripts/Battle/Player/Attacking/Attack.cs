@@ -18,6 +18,7 @@ public class Attack : MonoBehaviour
     private GameObject outline;
     private GameObject slashEffect;
     private GameObject enemy;
+    private GameObject comboMeter;
 
     
 
@@ -25,6 +26,7 @@ public class Attack : MonoBehaviour
     void Start()
     {
         enemy = GameObject.FindGameObjectWithTag("Enemy");
+        comboMeter = GameObject.FindGameObjectWithTag("Combo");
         arrow = GetComponent<SpriteRenderer>();
         beatTime = 60 / BPM;
         time = beatTime;
@@ -33,26 +35,13 @@ public class Attack : MonoBehaviour
         slashEffect = transform.GetChild(1).gameObject;
         outline.SetActive(false);
 
-        switch (player.GetComponent<PlayerBase>().attackDirs[0])
-        {
-            case "Right":
-                direction = "Right";
-                break;
-            case "Up":
-                direction = "Up";
-                break;
-            case "Down":
-                direction = "Down";
-                break;
-            case "Left":
-                direction = "Left";
-                break;
-        }
+        SetArrrow();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(player);
         SetColour();
 
         transform.rotation =  Quaternion.Euler(0, 0, rotation);
@@ -85,6 +74,25 @@ public class Attack : MonoBehaviour
       
     }
 
+    public void SetArrrow()
+    {
+        switch (player.GetComponent<PlayerBase>().attackDirs[0])
+        {
+            case "Right":
+                direction = "Right";
+                break;
+            case "Up":
+                direction = "Up";
+                break;
+            case "Down":
+                direction = "Down";
+                break;
+            case "Left":
+                direction = "Left";
+                break;
+        }
+    }
+
     private void SetColour()
     {
         switch (direction)
@@ -114,8 +122,8 @@ public class Attack : MonoBehaviour
         {
             if ((direction == "Up") && (outline.activeInHierarchy == true))
             {
-                enemy.GetComponent<EnemyBase>().TakeDamage(player);
-                NextNote();
+                HitEnemy();
+                HitEnemy();
             }
             else
             {
@@ -127,8 +135,7 @@ public class Attack : MonoBehaviour
         {
             if ((direction == "Left") && (outline.activeInHierarchy == true))
             {
-                enemy.GetComponent<EnemyBase>().TakeDamage(player);
-                NextNote();
+                HitEnemy();
             }
             else
             {
@@ -140,8 +147,7 @@ public class Attack : MonoBehaviour
         {
             if ((direction == "Right") && (outline.activeInHierarchy == true))
             {
-                enemy.GetComponent<EnemyBase>().TakeDamage(player);
-                NextNote();
+                HitEnemy();
             }
             else
             {
@@ -153,8 +159,7 @@ public class Attack : MonoBehaviour
         {
             if ((direction == "Down") && (outline.activeInHierarchy == true))
             {
-                enemy.GetComponent<EnemyBase>().TakeDamage(player);
-                NextNote();
+                HitEnemy();
             }
             else
             {
@@ -163,8 +168,12 @@ public class Attack : MonoBehaviour
         }
     }
 
-    private void NextNote()
+
+    private void HitEnemy()
     {
+        enemy.GetComponent<EnemyBase>().TakeDamage(player);
+        comboMeter.GetComponent<ComboSystem>().currCombo++;
+
         slashEffect.SetActive(true);
         slashEffect.GetComponent<AttackGraphic>().ResetTime();
 

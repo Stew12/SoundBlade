@@ -11,6 +11,9 @@ TagManager:
   - NoteGenerator
   - BattleMenu
   - HitBox
+  - HitUp
+  - Combo
+  - NoteHit
   layers:
   - Default
   - TransparentFX
