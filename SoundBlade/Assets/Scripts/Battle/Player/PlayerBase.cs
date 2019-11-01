@@ -57,6 +57,7 @@ public class PlayerBase : MonoBehaviour
     private GameObject mainCamera;
     private GameObject enemy;
     private SpriteRenderer sprite;
+    public AudioSource hurt, die;
 
     //Array for the pattern of attack directions
     public string[] attackDirs = new string[4];
@@ -83,7 +84,7 @@ public class PlayerBase : MonoBehaviour
 
         if (defenseBuff)
         {
-            defense *= 1.25f;
+            defense *= 1.1f;
         }
         else
         {
@@ -119,6 +120,8 @@ public class PlayerBase : MonoBehaviour
     //Is called when the party member misses a note
     public void TakeDamage(float enemyAttack, float enemyluck)
     {
+        hurt.Play();
+
         //Get varation (randomised, luck value affecting)
         float totalVariation = Random.Range(variation, variation + enemyluck);
 
@@ -135,13 +138,15 @@ public class PlayerBase : MonoBehaviour
     {
         if (currentHP <= 0)
         {
+            currentHP = 0.1f;
+
             //Remove from turn manager
             turnManager.GetComponent<TurnManager>().battlers.Remove(gameObject);
 
             //Increase enemy attack for every party member defeated
             enemy.GetComponent<EnemyBase>().attack *= 1.5f;
 
-            Destroy(gameObject);
+            StartCoroutine(example());
         }
     }
 
@@ -201,5 +206,12 @@ public class PlayerBase : MonoBehaviour
 
         //Subtract damage from hp
         enemy.GetComponent<EnemyBase>().currentHP -= damageLevel * damage;
+    }
+
+    IEnumerator example()
+    {
+        die.Play();
+        yield return new WaitWhile(() => die.isPlaying);
+        Destroy(gameObject);
     }
 }

@@ -100,7 +100,8 @@ public class NoteGeneration : MonoBehaviour {
             else
             {
                 //All notes played
-                finishedSong = true;
+                currTime = -0.9f;
+                index = 0;
             }
 
         }

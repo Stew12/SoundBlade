@@ -7,6 +7,7 @@ public class AnimationObject : MonoBehaviour
     private float animTime = 1f;
     public GameObject currentPlayer;
     private GameObject tm;
+    private AudioSource spellSound;
     public bool changeTurn = true;
 
     // Start is called before the first frame update
@@ -14,6 +15,8 @@ public class AnimationObject : MonoBehaviour
     void Start()
     {
         tm = GameObject.FindGameObjectWithTag("TurnManager");
+        spellSound = GetComponent<AudioSource>();
+        spellSound.Play();
     }
 
     // Update is called once per frame

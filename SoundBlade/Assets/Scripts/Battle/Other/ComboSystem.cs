@@ -42,7 +42,7 @@ public class ComboSystem : MonoBehaviour
         {
             comboWords[i].text = "Too Late!";
         }
-        comboWords[1].color = Color.red;
+        comboWords[1].color = Color.black;
     }
 
     //'Combo words' e.g. "Nice! Good! Great!"

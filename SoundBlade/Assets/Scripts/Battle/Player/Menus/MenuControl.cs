@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class MenuControl : MonoBehaviour
 {
+    public AudioSource move, select;
     public GameObject currentPlayer;
     public GameObject attackArrow;
     public GameObject SkillMenu;
-    public GameObject ItemMenu;
     private GameObject camera;
+    public GameObject ItemMenu;
     public GameObject[] MenuPanels = new GameObject[8];
     private int defaultPanelID = -1, panelID = -1;
     private bool startup = true;
@@ -57,6 +58,8 @@ public class MenuControl : MonoBehaviour
         //Attack
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            move.Play();
+
             PanelsReset();
             panelID = 1;
             PanelSelect();
@@ -64,6 +67,8 @@ public class MenuControl : MonoBehaviour
         //Skills
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            move.Play();
+
             PanelsReset();
             panelID = 2;
             PanelSelect();
@@ -71,6 +76,8 @@ public class MenuControl : MonoBehaviour
         //Item
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            move.Play();
+
             PanelsReset();
             panelID = 3;
             PanelSelect();
@@ -78,6 +85,8 @@ public class MenuControl : MonoBehaviour
         //Defend
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            move.Play();
+
             PanelsReset();
             panelID = 4;
             PanelSelect();
@@ -111,9 +120,11 @@ public class MenuControl : MonoBehaviour
 
         if ((Input.GetKeyDown(KeyCode.UpArrow) || (Input.GetKeyDown(KeyCode.Z))))
         {
+            
             if (defaultPanelID == 0)
             {
 
+                
                 Debug.Log("Attack");
 
                 //End Turn
@@ -121,14 +132,13 @@ public class MenuControl : MonoBehaviour
                 {
                     panel.SetActive(false);
                 }
-
                 defaultPanelID = -1;
                 panelID = -1;
 
                 attackArrow.SetActive(true);
                 attackArrow.GetComponent<Attack>().player = currentPlayer;
                 attackArrow.GetComponent<Attack>().SetArrrow();
-                gameObject.SetActive(false);
+                StartCoroutine(example());
 
             }
 
@@ -137,7 +147,6 @@ public class MenuControl : MonoBehaviour
         {
             if (defaultPanelID == 1)
             {
-
                 Debug.Log("Skills");
 
                 defaultPanelID = -1;
@@ -146,7 +155,8 @@ public class MenuControl : MonoBehaviour
                 SkillMenu.SetActive(true);
                 SkillMenu.GetComponent<SkillMenuControl>().currentPlayer = currentPlayer;
                 SkillMenu.GetComponent<SkillMenuControl>().PanelsReset();
-                gameObject.SetActive(false);
+
+                StartCoroutine(example());
 
             }
         }
@@ -154,15 +164,17 @@ public class MenuControl : MonoBehaviour
         {
             if (defaultPanelID == 2)
             {
-
+               
                 Debug.Log("Items");
 
                 defaultPanelID = -1;
                 panelID = -1;
 
+                Debug.Log(panelID);
                 ItemMenu.SetActive(true);
                 ItemMenu.GetComponent<ItemMenuControl>().currentPlayer = currentPlayer;
-                gameObject.SetActive(false);
+
+                StartCoroutine(example());
             }
         }
         else if ((Input.GetKeyDown(KeyCode.DownArrow) || (Input.GetKeyDown(KeyCode.Z))))
@@ -173,6 +185,8 @@ public class MenuControl : MonoBehaviour
 
                 //Increase defense for 1 turn
                 currentPlayer.GetComponent<PlayerBase>().defenseBuff = true;
+
+                select.Play();
 
                 //End Turn
                 foreach (GameObject panel in MenuPanels)
@@ -189,6 +203,14 @@ public class MenuControl : MonoBehaviour
         }
 
     
+    }
+
+    IEnumerator example()
+    {
+        select.Play();
+        yield return new WaitWhile(() => select.isPlaying);
+        PanelsReset();
+        gameObject.SetActive(false);
     }
 
 }

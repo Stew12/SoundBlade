@@ -9,6 +9,7 @@ public class NoteReciever : MonoBehaviour {
     public float maxTime = 0.25f, cMaxtime = 0.5f;
     private float timeLeft, ctimeLeft;
     private SpriteRenderer image;
+    public AudioSource hit;
 
     // Use this for initialization
     void Start () {

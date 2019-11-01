@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
+    public AudioSource hit, miss, beat;
+
     private string direction = "Up";
     private SpriteRenderer arrow;
 
@@ -57,6 +59,7 @@ public class Attack : MonoBehaviour
         {
             outline.SetActive(true);
             outline.GetComponent<AttackArrow2>().ResetTime();
+            beat.Play();
             time = beatTime;
         }
         
@@ -66,7 +69,7 @@ public class Attack : MonoBehaviour
             index = 0;
             attackTime = maxAttackTime;
             player.GetComponent<PlayerBase>().TurnEnd();
-            gameObject.SetActive(false);
+            StartCoroutine(example());
         }
 
         InputCheck();
@@ -122,47 +125,53 @@ public class Attack : MonoBehaviour
         {
             if ((direction == "Up") && (outline.activeInHierarchy == true))
             {
-                HitEnemy();
+                hit.Play();
                 HitEnemy();
             }
             else
             {
+                miss.Play();
                 attackTime = 0;
             }
         }
-        //Skills
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if ((direction == "Left") && (outline.activeInHierarchy == true))
             {
+                hit.Play();
                 HitEnemy();
             }
             else
             {
+                miss.Play();
                 attackTime = 0;
             }
         }
-        //Item
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if ((direction == "Right") && (outline.activeInHierarchy == true))
             {
+                hit.Play();
                 HitEnemy();
             }
             else
             {
+                miss.Play();
                 attackTime = 0;
             }
         }
-        //Defend
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             if ((direction == "Down") && (outline.activeInHierarchy == true))
             {
+                //Hit enemy
+                hit.Play();
                 HitEnemy();
             }
             else
             {
+                //Miss attack
+                miss.Play();
                 attackTime = 0;
             }
         }
@@ -184,5 +193,12 @@ public class Attack : MonoBehaviour
         }
 
         direction = player.GetComponent<PlayerBase>().attackDirs[index];
+    }
+
+    IEnumerator example()
+    {
+        miss.Play();
+        yield return new WaitWhile(() => miss.isPlaying);
+        gameObject.SetActive(false);
     }
 }

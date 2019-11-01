@@ -67,6 +67,7 @@ public class NoteSong : MonoBehaviour
         }
         else if ((other.tag == "NoteHit") && (!hiding))
         {
+            other.GetComponent<NoteReciever>().hit.Play();
             //Add to the combo
             comboMeter.GetComponent<ComboSystem>().currCombo++;
             comboMeter.GetComponent<ComboSystem>().late = false;

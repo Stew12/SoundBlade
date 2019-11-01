@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ItemMenuControl : MonoBehaviour
 {
+    public AudioSource move, select;
     public GameObject currentPlayer;
     public GameObject[] MenuPanels = new GameObject[8];
     private GameObject battleMenu;
@@ -91,6 +92,7 @@ public class ItemMenuControl : MonoBehaviour
         //Attack
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            move.Play();
             PanelsReset();
             panelID = 1;
             PanelSelect();
@@ -98,6 +100,7 @@ public class ItemMenuControl : MonoBehaviour
         //Skills
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            move.Play();
             PanelsReset();
             panelID = 2;
             PanelSelect();
@@ -105,6 +108,7 @@ public class ItemMenuControl : MonoBehaviour
         //Item
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            move.Play();
             PanelsReset();
             panelID = 3;
             PanelSelect();
@@ -112,6 +116,7 @@ public class ItemMenuControl : MonoBehaviour
         //Defend
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            move.Play();
             PanelsReset();
             panelID = 4;
             PanelSelect();
@@ -148,7 +153,7 @@ public class ItemMenuControl : MonoBehaviour
             if (defaultPanelID == 0)
             {
 
-               
+                StartCoroutine(example());
             }
 
         }
@@ -161,7 +166,7 @@ public class ItemMenuControl : MonoBehaviour
 
                 defaultPanelID = -1;
                 panelID = -1;
-
+                StartCoroutine(example());
             }
         }
         else if ((Input.GetKeyDown(KeyCode.RightArrow) || (Input.GetKeyDown(KeyCode.Z))))
@@ -173,7 +178,7 @@ public class ItemMenuControl : MonoBehaviour
 
                 defaultPanelID = -1;
                 panelID = -1;
-
+                StartCoroutine(example());
             }
         }
         else if ((Input.GetKeyDown(KeyCode.DownArrow) || (Input.GetKeyDown(KeyCode.Z))))
@@ -189,10 +194,18 @@ public class ItemMenuControl : MonoBehaviour
 
                 battleMenu.SetActive(true);
                 gameObject.SetActive(false);
+                StartCoroutine(example());
+
             }
         }
 
 
     }
-
+    IEnumerator example()
+    {
+        select.Play();
+        yield return new WaitWhile(() => select.isPlaying);
+        PanelsReset();
+        gameObject.SetActive(false);
+    }
 }

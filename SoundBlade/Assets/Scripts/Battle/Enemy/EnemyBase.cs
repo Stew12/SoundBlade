@@ -103,7 +103,7 @@ public class EnemyBase : MonoBehaviour
         float playerLuckStat = player.GetComponent<PlayerBase>().luck;
 
         //Get varation (randomised, luck value affecting)
-        float totalVariation = Random.Range(-variation, variation + playerLuckStat);
+        float totalVariation = Random.Range(variation, variation + playerLuckStat);
 
         //Damage formula
         float damage = (playerAttackStat * playerAttackStat / (playerAttackStat + defense)) + totalVariation;

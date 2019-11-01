@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SkillMenuControl : MonoBehaviour
 {
+    public AudioSource move, select;
     public GameObject currentPlayer;
     public GameObject[] MenuPanels = new GameObject[8];
     public GameObject[] SkillObjects = new GameObject[8];
@@ -105,6 +106,7 @@ public class SkillMenuControl : MonoBehaviour
         //Attack
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            move.Play();
             PanelsReset();
             panelID = 1;
             PanelSelect();
@@ -112,6 +114,7 @@ public class SkillMenuControl : MonoBehaviour
         //Skills
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            move.Play();
             PanelsReset();
             panelID = 2;
             PanelSelect();
@@ -119,6 +122,7 @@ public class SkillMenuControl : MonoBehaviour
         //Item
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            move.Play();
             PanelsReset();
             panelID = 3;
             PanelSelect();
@@ -126,6 +130,7 @@ public class SkillMenuControl : MonoBehaviour
         //Defend
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            move.Play();
             PanelsReset();
             panelID = 4;
             PanelSelect();
@@ -177,7 +182,7 @@ public class SkillMenuControl : MonoBehaviour
 
                 //End turn when skill aniamtion finishes
                 // currentPlayer.GetComponent<PlayerBase>().TurnEnd();
-                gameObject.SetActive(false);
+                StartCoroutine(example());
 
             }
 
@@ -218,7 +223,7 @@ public class SkillMenuControl : MonoBehaviour
                 panelID = -1;
 
                 battleMenu.SetActive(true);
-                gameObject.SetActive(false);
+                StartCoroutine(example());
             }
         }
 
@@ -257,7 +262,7 @@ public class SkillMenuControl : MonoBehaviour
                 spawnedObj = Instantiate(animObj, new Vector3(enemy.transform.position.x, enemy.transform.position.y - yOffset, enemy.transform.position.z - zOffset), Quaternion.identity);
 
                 // Deal large amount of damage, no other effects
-                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(2, 7, false, false);
+                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(2, 14, false, false);
                 break;
 
             //Healing Wind: heals whole party, flute
@@ -282,7 +287,7 @@ public class SkillMenuControl : MonoBehaviour
                        battler.GetComponent<PlayerBase>().SetHPLabel();
 
                         //Just Reduce MP- non-damaging
-                        currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(0, 10, false, false);
+                        currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(0, 5, false, false);
                     }
                 }
                 
@@ -318,6 +323,13 @@ public string SkillDescription(string skillname)
     return desc;
 }
 
+    IEnumerator example()
+    {
+        select.Play();
+        yield return new WaitWhile(() => select.isPlaying);
+        PanelsReset();
+        gameObject.SetActive(false);
+    }
 
 
 }
