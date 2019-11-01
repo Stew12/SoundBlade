@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
@@ -11,17 +12,25 @@ public class MusicPlayer : MonoBehaviour
     public float delay = 1f;
 
     private bool playing = false;
-
+    public bool menuMusic;
     // Start is called before the first frame update
     void Start()
     {
+        if (menuMusic)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(music.time);
-        delay -= Time.deltaTime;
+        if ((SceneManager.GetActiveScene().name == "Main Battle") && (menuMusic))
+        {
+            Destroy(gameObject);
+        }
+
+            delay -= Time.deltaTime;
         if ((delay <= 0) && !playing)
         {
             music.Play();
@@ -32,5 +41,7 @@ public class MusicPlayer : MonoBehaviour
         {
             music.Play();
         }
+
+        
     }
 }

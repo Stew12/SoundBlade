@@ -244,7 +244,7 @@ public class SkillMenuControl : MonoBehaviour
                 spawnedObj = Instantiate(animObj, new Vector3(enemy.transform.position.x, enemy.transform.position.y - yOffset, enemy.transform.position.z - zOffset), Quaternion.identity);
 
                 // Deal large amount of damage, no other effects
-                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(2.5f, 15, false, false);
+                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(2.5f, 15, true, false);
                 break;
 
             //Flame Chord: fire damaging attack, keyboard
@@ -262,7 +262,7 @@ public class SkillMenuControl : MonoBehaviour
                 spawnedObj = Instantiate(animObj, new Vector3(enemy.transform.position.x, enemy.transform.position.y - yOffset, enemy.transform.position.z - zOffset), Quaternion.identity);
 
                 // Deal large amount of damage, no other effects
-                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(2, 14, false, false);
+                currentPlayer.GetComponent<PlayerBase>().DealSpellDamage(2, 14, false, true);
                 break;
 
             //Healing Wind: heals whole party, flute
@@ -278,7 +278,7 @@ public class SkillMenuControl : MonoBehaviour
                         spawnedObj = Instantiate(animObj, new Vector3(battler.transform.position.x, battler.transform.position.y, battler.transform.position.z), Quaternion.identity);
                         spawnedObj.GetComponent<AnimationObject>().changeTurn = false;
 
-                        battler.GetComponent<PlayerBase>().currentHP /= 0.5f;
+                        battler.GetComponent<PlayerBase>().currentHP += (battler.GetComponent<PlayerBase>().maxHP / 2);
                         if (battler.GetComponent<PlayerBase>().currentHP > battler.GetComponent<PlayerBase>().maxHP)
                         {
                             battler.GetComponent<PlayerBase>().currentHP = battler.GetComponent<PlayerBase>().maxHP;

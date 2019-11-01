@@ -184,11 +184,11 @@ public class PlayerBase : MonoBehaviour
 
         if (debuffing)
         {
-            enemy.GetComponent<EnemyBase>().attack /= 1.5f;
+            enemy.GetComponent<EnemyBase>().attack /= 1.1f;
         }
         else if (buffing)
         {
-            attack *= 1.5f;
+            attack *= 1.2f;
         }
 
         //Reduce MP

@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\EnterText.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemy\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\Battle\Other\AnimationObject.cs" />
     <Compile Include="Assets\Scripts\Battle\Other\Camera.cs" />
@@ -76,12 +77,12 @@
     <Compile Include="Assets\Scripts\Battle\Player\PlayerBase.cs" />
     <Compile Include="Assets\Scripts\Battle\Player\PlayerValues.cs" />
     <Compile Include="Assets\Scripts\Battle\Player\SpriteBounce.cs" />
+    <Compile Include="Assets\Scripts\Menus\WinScreenData.cs" />
     <Compile Include="Assets\Scripts\Rhythm Game\MusicPlayer.cs" />
     <Compile Include="Assets\Scripts\Rhythm Game\NoteGeneration.cs" />
     <Compile Include="Assets\Scripts\Rhythm Game\NoteMove.cs" />
     <Compile Include="Assets\Scripts\Rhythm Game\NoteReciever.cs" />
     <Compile Include="Assets\Scripts\Rhythm Game\NoteSong.cs" />
-    <Compile Include="Assets\WinScreenData.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
