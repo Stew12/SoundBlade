@@ -10,7 +10,6 @@ public class MusicBar : MonoBehaviour
 
     public AudioSource music;
     public GameObject startBar;
-    public GameObject Treble;
 
     private StreamWriter noteWriter;
 
@@ -29,10 +28,11 @@ public class MusicBar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startingPos = Treble.transform.position;
+        startingPos = startBar.transform.position;
         transform.position = startingPos;
         path = "C:\\Users\\Lachlan\\Documents\\SoundBlade\\Assets\\Scripts\\Song1.txt";
         songLength = movementSpeed;
+        music.Play();
     }
 
     // Update is called once per frame
@@ -40,7 +40,17 @@ public class MusicBar : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            transform.position = new Vector3(Input.mousePosition.x, transform.position.y, transform.position.z);
+            if (Input.mousePosition.x >= startBar.transform.position.x)
+            {
+                transform.position = new Vector3(Input.mousePosition.x, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                transform.position = new Vector3(startBar.transform.position.x, transform.position.y, transform.position.z);
+            }
+
+            distance = transform.position.x - startBar.transform.position.x;
+            music.time = distance/songLength;
         }
 
         if (Input.GetKeyDown("space")) 
@@ -48,12 +58,15 @@ public class MusicBar : MonoBehaviour
             Debug.Log("p");
             if (!paused)
             {
-                music.volume = 0;
+                music.Pause();
                 paused = true;
+
+                distance = transform.position.x - startBar.transform.position.x;
+                music.time = distance/songLength;
             }
             else
             {
-                music.volume = musicVolume;
+                music.Play();
                 paused = false;
             }
         }
@@ -80,13 +93,11 @@ public class MusicBar : MonoBehaviour
             movementSpeed *= 2;
         }
 
-        distance = transform.position.x - startBar.transform.position.x;
         if (!paused)
-        transform.position += Vector3.right * (movementSpeed * Time.deltaTime);
-
-        music.time = distance/songLength;
-
-        music.Play();
+        {
+            transform.position += Vector3.right * (movementSpeed * Time.deltaTime);
+        }
+        
         
         
         //File.Delete(path);
